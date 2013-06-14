@@ -13,16 +13,17 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<mainClass>${project.groupId}.${project.artifactId}.Main</mainClass>
 	</properties>
-
+    
+    <!--
 	<distributionManagement>
-		<!-- Publish versioned releases here -->
+		// <!- Publish versioned releases here ->
 		<repository>
 			<id>nexus</id>
 			<name>nexus.alta189</name>
 			<url>http://nexus.alta189.com/content/repositories/releases</url>
 		</repository>
 
-		<!-- Publish snapshots here -->
+		<!- Publish snapshots here ->
 		<snapshotRepository>
 			<id>nexus</id>
 			<name>nexus.alta189</name>
@@ -30,21 +31,21 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-	<!-- Source code -->
+	//<!-Source code ->
 	<scm>
 		<developerConnection>scm:git:git@github.com:CyborgDev/${project.name}.git</developerConnection>
 		<connection>scm:git:git://github.com/CyborgDev/${project.name}.git</connection>
 		<url>https://github.com/CyborgDev/${project.name}</url>
 	</scm>
 
-	<!-- Continuous integration -->
+    //<! -Continuous integration ->
 	<ciManagement>
 		<system>jenkins</system>
 		<url>http://ci.alta189.com</url>
 	</ciManagement>
-
+    -->
 	<repositories>
-		<repository>
+        <repository>
 			<id>nexus</id>
 			<name>nesus.alta189</name>
 			<url>http://repo.alta189.com/</url>
@@ -53,6 +54,17 @@
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
 		<repository>
 			<id>snapshot-repository.java.net</id>
 			<name>Java.net Snapshot Repository for Maven</name>
@@ -65,7 +77,7 @@
 		<dependency>
 			<groupId>org.pircbotx</groupId>
 			<artifactId>pircbotx</artifactId>
-			<version>1.6</version>
+			<version>1.8-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
@@ -104,14 +116,13 @@
 		<dependency>
 			<groupId>jline</groupId>
 			<artifactId>jline</artifactId>
-			<version>2.6</version>
+			<version>1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alta189</groupId>
 			<artifactId>simplesave</artifactId>
 			<version>1.2.0-SNAPSHOT</version>
 			<type>jar</type>
-			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -183,27 +194,27 @@
 	</dependencies>
 
 	<build>
-		<defaultGoal>clean</defaultGoal>
 		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
 		<!-- Resources -->
-		<resources>
-			<resource>
-				<targetPath>.</targetPath>
-				<filtering>true</filtering>
-				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>version</include>
-				</includes>
-			</resource>
-			<resource>
-				<targetPath>com/alta189/cyborg</targetPath>
-				<filtering>false</filtering>
-				<directory>${basedir}/src/main/resources</directory>
-				<includes>
-					<include>settings.yml</include>
-					<include>log4j.properties</include>
-				</includes>
-			</resource>
+        <resources>
+            <resource>
+                <directory>${basedir}/src/main/resources</directory>
+                <targetPath>.</targetPath>
+                <includes>
+                    <include>settings.yml</include>
+                    <include>log4j.properties</include>
+                    <include>version</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>${basedir}/target/lib</directory>
+                <targetPath>.</targetPath>
+                <includes>
+                    <include>jline-1.0.jar</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
 		</resources>
 		<!-- Plugins -->
 		<plugins>
@@ -225,6 +236,8 @@
 				<configuration>
 					<archive>
 						<manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
 							<mainClass>${mainClass}</mainClass>
 						</manifest>
 					</archive>
@@ -243,6 +256,12 @@
 						</goals>
 						<configuration>
 							<artifactSet>
+                                <!--<includes>
+                                    <include>org.pircbotx:pircbotx</include>
+                                    <include>com.alta189:simplesave</include>
+                                    <include>mysql:mysql-connector-java</include>
+                                    <!-<include>jline:jline</include>->
+                                </includes>-->
 								<excludes>
 									<exclude>junit:*</exclude>
 								</excludes>
@@ -251,6 +270,50 @@
 					</execution>
 				</executions>
 			</plugin>
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.9.0</version>
+                <configuration>
+                    <header>HEADER.txt</header>
+                    <includes>
+                        <include>src/**</include>
+                    </includes>
+                    <excludes>
+                        <exclude>src/*/resources/**</exclude>
+                    </excludes>
+                    <strictCheck>true</strictCheck>
+                    <quiet>true</quiet>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Needs to be built twice for this -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.4</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>
+                                ${project.build.directory}/lib
+                            </outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 		</plugins>
 	</build>
 </project>
