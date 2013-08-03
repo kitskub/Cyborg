@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -21,6 +21,7 @@ package com.alta189.cyborg.api.command;
 import com.alta189.cyborg.Cyborg;
 import com.alta189.cyborg.api.terminal.TerminalUser;
 import lombok.Getter;
+import org.pircbotx.Channel;
 import org.pircbotx.User;
 
 public class CommandSource {
@@ -30,17 +31,21 @@ public class CommandSource {
 	private final User user;
 	@Getter
 	private final Source source;
+	@Getter
+	private final String nick;
 
 	public CommandSource(TerminalUser terminalUser) {
 		this.terminalUser = terminalUser;
 		this.user = null;
 		this.source = Source.TERMINALUSER;
+		this.nick = terminalUser.getNick();
 	}
 
 	public CommandSource(User user) {
 		this.user = user;
 		this.terminalUser = null;
 		this.source = Source.USER;
+		this.nick = getNick();
 	}
 
 	public void sendMessage(String message) {

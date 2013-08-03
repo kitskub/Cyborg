@@ -30,13 +30,15 @@ import java.util.Map;
 public abstract class MapBasedConfiguration extends AbstractConfiguration {
 	/**
 	 * Implementations can use this method to provide the necessary data for calls of load.
+	 *
 	 * @return A map with raw configuration data
 	 * @throws ConfigurationException when an error occurs while loading.
 	 */
 	protected abstract Map<?, ?> loadToMap() throws ConfigurationException;
 
 	/**
-	 * Save the  data from this configuration. This method is called from {@link #save()}
+	 * Save the data from this configuration. This method is called from {@link #save()}
+	 *
 	 * @param map Configuration as a set of nested Maps
 	 * @throws ConfigurationException When an error occurs while saving the given data.
 	 */

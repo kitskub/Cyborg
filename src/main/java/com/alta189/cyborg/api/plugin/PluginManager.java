@@ -27,6 +27,7 @@ import java.io.File;
 public interface PluginManager {
 	/**
 	 * Returns the the instance of a plugins when given its name
+	 *
 	 * @param plugin The name of the plugin
 	 * @return instance of the plugin
 	 */
@@ -34,12 +35,14 @@ public interface PluginManager {
 
 	/**
 	 * Returns an array of plugins that have been loaded
+	 *
 	 * @return plugins
 	 */
 	public abstract Plugin[] getPlugins();
 
 	/**
 	 * Loads the file as a plugin
+	 *
 	 * @param paramFile
 	 * @return instance of the plugin
 	 * @throws InvalidPluginException
@@ -51,6 +54,7 @@ public interface PluginManager {
 
 	/**
 	 * Loads all plugins in a directory
+	 *
 	 * @param paramFile
 	 * @return array of plugins loaded
 	 */
@@ -68,12 +72,14 @@ public interface PluginManager {
 
 	/**
 	 * Enables the plugin
+	 *
 	 * @param plugin
 	 */
 	public abstract void enablePlugin(Plugin plugin);
 
 	/**
 	 * Disables the plugin
+	 *
 	 * @param plugin
 	 */
 	public abstract void disablePlugin(Plugin plugin);

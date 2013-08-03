@@ -47,6 +47,7 @@ import java.util.regex.Pattern;
 
 /**
  * A configuration that loads from a YAML file
+ *
  * @author zml2008
  */
 public class YamlConfiguration extends MapBasedConfiguration implements FileConfiguration {

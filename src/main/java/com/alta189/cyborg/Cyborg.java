@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -25,61 +25,47 @@ import com.alta189.cyborg.api.command.Named;
 import com.alta189.cyborg.api.command.annotation.EmptyConstructorInjector;
 import com.alta189.cyborg.api.event.EventManager;
 import com.alta189.cyborg.api.event.SimpleEventManager;
-import com.alta189.cyborg.api.event.bot.JoinEvent;
-import com.alta189.cyborg.api.event.bot.PartEvent;
-import com.alta189.cyborg.api.event.bot.SendActionEvent;
 import com.alta189.cyborg.api.event.bot.SendMessageEvent;
-import com.alta189.cyborg.api.event.bot.SendNoticeEvent;
-import com.alta189.cyborg.api.event.channel.SetChannelTopicEvent;
 import com.alta189.cyborg.api.plugin.CommonPluginLoader;
 import com.alta189.cyborg.api.plugin.CommonPluginManager;
 import com.alta189.cyborg.api.plugin.Plugin;
 import com.alta189.cyborg.api.plugin.PluginManager;
 import com.alta189.cyborg.api.terminal.TerminalCommands;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import lombok.Getter;
 import org.apache.commons.io.IOUtils;
-import org.pircbotx.Channel;
-import org.pircbotx.PircBotX;
-import org.pircbotx.User;
-import org.pircbotx.exception.IrcException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Set;
+import org.pircbotx.Channel;
+import org.pircbotx.User;
 
 public class Cyborg {
-	private static Cyborg instance;
-	private static final String newLine = System.getProperty("line.separator");
-	@Getter(lazy = true)
+	private static final Cyborg INSTANCE = new Cyborg();
+	@Getter
 	private final static String version = readVersion();
-	private final File pluginDir = new File("plugins");
+	private final File pluginDir;
 	private final CommonPluginManager pluginManager;
 	private final SimpleEventManager eventManager;
 	@Getter
 	private final CommandManager commandManager;
-	private final PircBotX bot = new PircBotX();
+	/**
+	 * This maps bots to their server.
+	 */
+	private final BiMap<String, CyborgBot> bots = HashBiMap.create();
 
-	public Cyborg() {
-		if (instance != null) {
-			throw new IllegalAccessError("There is already an instance of Cyborg!");
-		}
+	private Cyborg() {
+		pluginDir = new File(Main.getSettingsBase(), "plugins");
 		pluginManager = new CommonPluginManager(this);
 		pluginManager.registerPluginLoader(CommonPluginLoader.class);
 		eventManager = new SimpleEventManager();
 		commandManager = new CommonCommandManager();
-
 		// Register Internal Listeners
-		bot.getListenerManager().addListener(new PircBotXListener());
 		eventManager.registerEvents(new CommandListener(), this);
 		eventManager.registerEvents(new InternalListener(), this);
 
-		// Setup Bot \\
-		bot.setVerbose(StartupArguments.getInstance().isVerbose());
-		bot.setName(Settings.getNick());
-		bot.setLogin(Settings.getIdent());
-		setMessageDelay(Settings.getMessageDelay());
-
-		// Register Default Commands \\
+		// Register Default Commands
 		commandManager.registerCommands(new Named() {
 			@Override
 			public String getName() {
@@ -87,7 +73,6 @@ public class Cyborg {
 			}
 		}, TerminalCommands.class, new EmptyConstructorInjector());
 
-		instance = this;
 	}
 
 	private static String readVersion() {
@@ -104,7 +89,7 @@ public class Cyborg {
 	}
 
 	public static Cyborg getInstance() {
-		return instance;
+		return INSTANCE;
 	}
 
 	protected final void loadPlugins() {
@@ -136,72 +121,39 @@ public class Cyborg {
 		return pluginDir;
 	}
 
-	public Set<Channel> getChannels() {
-		return bot.getChannels();
+	public CyborgBot getBot(String server) {
+		CyborgBot bot = bots.get(server);
+		if (bot == null) {
+			throw new IllegalStateException("Bot not initialized!");
+		}
+		return bot;
 	}
 
-	public Set<Channel> getChannels(User user) {
-		return bot.getChannels(user);
-	}
-
-	public Channel getChannel(String channel) {
-		return bot.getChannel(channel);
-	}
-
-	public Set<String> getChannelNames() {
-		return bot.getChannelsNames();
-	}
-
-	public User getUser(String user) {
-		return bot.getUser(user);
-	}
-
-	public Set<User> getUsers(Channel channel) {
-		return bot.getUsers(channel);
-	}
-
-	public void setMessageDelay(long delay) {
-		bot.setMessageDelay(delay);
-	}
-
-	public long getMessageDelay() {
-		return bot.getMessageDelay();
-	}
-
-	public void connect(String address) throws IOException, IrcException {
-		bot.connect(address);
-	}
-
-	public void connect(String address, int port) throws IOException, IrcException {
-		bot.connect(address, port);
-	}
-
-	public void connect(String address, int port, String pass) throws IOException, IrcException {
-		bot.connect(address, port, pass);
-	}
-
-	public void quitServer() {
-		bot.quitServer();
-	}
-
-	public void quitServer(String reason) {
-		bot.quitServer(reason);
+	public Channel getChannel(String server, String channel) {
+		return getBot(server).getUserChannelDao().getChannel(channel);
 	}
 
 	public void shutdown(String reason) {
-		try {
-			bot.quitServer(reason);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		} catch (Exception ignored) {
-
+		for (CyborgBot bot : bots.values()) {
+			bot.sendIRC().quitServer(reason);
+			bot.shutdown(true);
 		}
-		bot.dispose();
+		bots.clear();
+		shutdownEnd();
+	}
+
+	public void shutdown() {
+		for (CyborgBot bot : bots.values()) {
+			bot.sendIRC().quitServer();
+			bot.shutdown(true);
+		}
+		bots.clear();
+		shutdownEnd();
+	}
+
+	private void shutdownEnd() {
 		pluginManager.disablePlugins();
-		Main.getTerminalThread().interrupt();
+		Main.shutdownTerminal();
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -210,152 +162,30 @@ public class Cyborg {
 		System.exit(0);
 	}
 
-	public void shutdown() {
-		try {
-			bot.disconnect();
-		} catch (Exception ignore) {
-
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		bot.dispose();
-		pluginManager.disablePlugins();
-		System.exit(0);
-	}
-
-	public void joinChannel(String channel) {
-		joinChannel(channel, null);
-	}
-
-	public void joinChannel(String channel, String key) {
-		JoinEvent joinEvent = new JoinEvent(channel, key);
-		joinEvent = eventManager.callEvent(joinEvent);
-		if (!joinEvent.isCancelled()) {
-			if (joinEvent.getKey() != null) {
-				bot.joinChannel(joinEvent.getChannel(), joinEvent.getKey());
-			} else {
-				bot.joinChannel(joinEvent.getChannel());
-			}
-		}
-	}
-
-	public void partChannel(Channel channel) {
-		partChannel(channel, null);
-	}
-
-	public void partChannel(Channel channel, String reason) {
-		PartEvent partEvent = new PartEvent(channel, reason);
-		partEvent = eventManager.callEvent(partEvent);
-		if (!partEvent.isCancelled()) {
-			if (partEvent.getReason() != null) {
-				bot.partChannel(partEvent.getChannel(), partEvent.getReason());
-			} else {
-				bot.partChannel(channel);
-			}
-		}
-	}
-
-	public void sendMessage(User target, String message) {
-		sendMessage(target.getNick(), message);
-	}
-
-	public void sendMessage(Channel target, String message) {
-		sendMessage(target.getName(), message);
-	}
-
-	public void sendMessage(Channel target, User user, String message) {
-		sendMessage(target.getName(), user.getNick() + ": " + message);
-	}
-
-	public void sendMessage(String target, String message) {
-		SendMessageEvent event = new SendMessageEvent(target, message);
-		event = eventManager.callEvent(event);
-		if (!event.isCancelled()) {
-			if (event.getMessage().contains(newLine)) {
-				for (String line : event.getMessage().split(newLine)) {
-					bot.sendMessage(event.getTarget(), line);
-				}
-			} else {
-				bot.sendMessage(event.getTarget(), event.getMessage());
-			}
-		}
-	}
-
-	public void sendAction(User target, String action) {
-		sendAction(target.getNick(), action);
-	}
-
-	public void sendAction(Channel target, String action) {
-		sendAction(target.getName(), action);
-	}
-
-	public void sendAction(String target, String message) {
-		SendActionEvent event = new SendActionEvent(target, message);
-		event = eventManager.callEvent(event);
-		if (!event.isCancelled()) {
-			if (event.getAction().contains(newLine)) {
-				for (String line : event.getAction().split(newLine)) {
-					bot.sendAction(event.getTarget(), line);
-				}
-			} else {
-				bot.sendAction(event.getTarget(), event.getAction());
-			}
-		}
-	}
-
-	public void sendNotice(User target, String action) {
-		sendNotice(target.getNick(), action);
-	}
-
-	public void sendNotice(Channel target, String action) {
-		sendNotice(target.getName(), action);
-	}
-
-	public void sendNotice(String target, String message) {
-		SendNoticeEvent event = new SendNoticeEvent(target, message);
-		event = eventManager.callEvent(event);
-		if (!event.isCancelled()) {
-			if (event.getNotice().contains(newLine)) {
-				for (String line : event.getNotice().split(newLine)) {
-					bot.sendNotice(event.getTarget(), line);
-				}
-			} else {
-				bot.sendNotice(event.getTarget(), event.getNotice());
-			}
-		}
-	}
-
-	public String getNick() {
-		return bot.getNick();
-	}
-
-	public String getLogin() {
-		return bot.getLogin();
-	}
-
-	public String getIndent() {
-		return bot.getLogin();
-	}
-
-	public String getHostmask() {
-		return bot.getUserBot().getHostmask();
+	public String getHostmask(String server) {
+		return getBot(server).getHostmask();
 	}
 
 	/**
 	 * Gets the time in milliseconds that Cyborg has been running
+	 *
 	 * @return runningTime
 	 */
 	public long getRunningTime() {
 		return System.currentTimeMillis() - Main.getStart();
 	}
-
-	public void setTopic(Channel channel, String topic) {
-		SetChannelTopicEvent event = eventManager.callEvent(new SetChannelTopicEvent(channel, topic));
-		if (!event.isCancelled()) {
-			bot.setTopic(event.getChannel(), event.getTopic());
+	
+	public void sendMessage(User user, String message) {
+		SendMessageEvent event = new SendMessageEvent(user.getNick(), message);
+		event = eventManager.callEvent(event);
+		if (event.isCancelled())
+			return;
+		if (event.getMessage().contains(CyborgBot.NEWLINE)) {
+			for (String line : event.getMessage().split(CyborgBot.NEWLINE)) {
+				user.send().message(line);
+			}
+		} else {
+			user.send().message(message);
 		}
 	}
 }

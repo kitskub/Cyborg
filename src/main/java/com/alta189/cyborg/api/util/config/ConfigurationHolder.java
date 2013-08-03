@@ -25,8 +25,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This object holds a reference to a ConfigurationNode and provides all the methods to
- * get its value, but using the default provided in the constructor
+ * This object holds a reference to a ConfigurationNode and provides all the methods to get its value, but using the
+ * default provided in the constructor
  */
 public class ConfigurationHolder extends ValueHolderBase implements ConfigurationNodeSource {
 	private Configuration configuration;

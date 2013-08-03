@@ -65,6 +65,7 @@ public class SimpleEventManager implements EventManager {
 
 	/**
 	 * Returns the specified event type's HandlerList
+	 *
 	 * @param type EventType to lookup
 	 * @return HandlerList The list of registered handlers for the event.
 	 */

@@ -19,9 +19,7 @@
 package com.alta189.cyborg.api.command;
 
 public enum ReturnType {
-
 	ACTION,
 	MESSAGE,
 	NOTICE
-
 }

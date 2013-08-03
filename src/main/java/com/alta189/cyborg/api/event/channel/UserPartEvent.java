@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -33,21 +33,22 @@ public class UserPartEvent extends Event {
 	private final Channel channel;
 	@Getter
 	private final long timestamp;
+	@Getter
+	private final String reason;
 
 	public UserPartEvent(PartEvent event) {
-		this(event.getUser(), event.getChannel(), event.getTimestamp());
+		this(event.getUser(), event.getChannel(), event.getTimestamp(), event.getReason());
 	}
 
-	public UserPartEvent(User user, Channel channel) {
-		this.user = user;
-		this.channel = channel;
-		this.timestamp = System.currentTimeMillis();
+	public UserPartEvent(User user, Channel channel, String reason) {
+		this(user, channel, System.currentTimeMillis(), reason);
 	}
 
-	public UserPartEvent(User user, Channel channel, long timestamp) {
+	public UserPartEvent(User user, Channel channel, long timestamp, String reason) {
 		this.user = user;
 		this.channel = channel;
 		this.timestamp = timestamp;
+		this.reason = reason;
 	}
 
 	@Override

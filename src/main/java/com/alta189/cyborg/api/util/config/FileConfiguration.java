@@ -26,6 +26,7 @@ import java.io.File;
 public interface FileConfiguration extends Configuration {
 	/**
 	 * Returns the file that this configuration loads from.
+	 *
 	 * @return The file that this configuration loads from
 	 */
 	public File getFile();

@@ -25,14 +25,15 @@ import java.util.Map;
 
 /**
  * This represents a configuration that loads its values from an in-memory {@link Map}
+ *
  * @author zml2008
  */
 public class MapConfiguration extends MapBasedConfiguration {
 	private Map<?, ?> map;
 
 	/**
-	 * Create a new configuration backed by an empty map. Loading a configuration
-	 * instantiated with this constructor will do nothing.
+	 * Create a new configuration backed by an empty map. Loading a configuration instantiated with this constructor
+	 * will do nothing.
 	 */
 	public MapConfiguration() {
 		this(Collections.emptyMap());

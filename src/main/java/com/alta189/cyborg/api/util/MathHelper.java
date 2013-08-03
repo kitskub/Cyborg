@@ -45,6 +45,7 @@ public class MathHelper {
 
 	/**
 	 * Calculates the squared length of all axis offsets given
+	 *
 	 * @param values of the axis to get the squared length of
 	 * @return the squared length
 	 */
@@ -58,6 +59,7 @@ public class MathHelper {
 
 	/**
 	 * Calculates the length of all axis offsets given
+	 *
 	 * @param values of the axis to get the length of
 	 * @return the length
 	 */
@@ -66,8 +68,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Gets the difference between two angles
-	 * This value is always positive (0 - 180)
+	 * Gets the difference between two angles This value is always positive (0 - 180)
+	 *
 	 * @param angle1
 	 * @param angle2
 	 * @return the positive angle difference
@@ -77,8 +79,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Gets the difference between two radians
-	 * This value is always positive (0 - PI)
+	 * Gets the difference between two radians This value is always positive (0 - PI)
+	 *
 	 * @param radian1
 	 * @param radian2
 	 * @return the positive radian difference
@@ -89,6 +91,7 @@ public class MathHelper {
 
 	/**
 	 * Wraps the angle between -180 and 180 degrees
+	 *
 	 * @param angle to wrap
 	 * @return -180 > angle <= 180
 	 */
@@ -105,6 +108,7 @@ public class MathHelper {
 
 	/**
 	 * Wraps a byte between 0 and 256
+	 *
 	 * @param value to wrap
 	 * @return 0 >= byte < 256
 	 */
@@ -118,6 +122,7 @@ public class MathHelper {
 
 	/**
 	 * Wraps the radian between -PI and PI
+	 *
 	 * @param radian to wrap
 	 * @return -PI > radian <= PI
 	 */
@@ -134,7 +139,8 @@ public class MathHelper {
 
 	/**
 	 * Rounds a number to the amount of decimals specified
-	 * @param input    to round
+	 *
+	 * @param input to round
 	 * @param decimals to round to
 	 * @return the rounded number
 	 */
@@ -144,8 +150,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Calculates the linear interpolation between a and b with the given
-	 * percent
+	 * Calculates the linear interpolation between a and b with the given percent
+	 *
 	 * @param a
 	 * @param b
 	 * @param percent
@@ -156,8 +162,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Calculates the linear interpolation between a and b with the given
-	 * percent
+	 * Calculates the linear interpolation between a and b with the given percent
+	 *
 	 * @param a
 	 * @param b
 	 * @param percent
@@ -168,8 +174,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Calculates the linear interpolation between a and b with the given
-	 * percent
+	 * Calculates the linear interpolation between a and b with the given percent
+	 *
 	 * @param a
 	 * @param b
 	 * @param percent
@@ -180,8 +186,8 @@ public class MathHelper {
 	}
 
 	/**
-	 * Calculates the linear interpolation between a and b with the given
-	 * percent
+	 * Calculates the linear interpolation between a and b with the given percent
+	 *
 	 * @param a
 	 * @param b
 	 * @param percent
@@ -258,7 +264,6 @@ public class MathHelper {
 	public final static double sqrt(final double x) {
 		return x * inverseSqrt(x);
 	}
-
 	private static final double sin_a = -4 / SQUARED_PI;
 	private static final double sin_b = 4 / PI;
 	private static final double sin_p = 9d / 40;
@@ -269,7 +274,6 @@ public class MathHelper {
 	private final static double atan_a = 0.280872d;
 
 	// Integer Maths
-
 	public static int floor(double x) {
 		int y = (int) x;
 		if (x < y) {
@@ -288,6 +292,7 @@ public class MathHelper {
 
 	/**
 	 * Rounds an integer up to the next power of 2.
+	 *
 	 * @param x
 	 * @return the lowest power of 2 greater or equal to x
 	 */
@@ -310,6 +315,7 @@ public class MathHelper {
 
 	/**
 	 * Casts a value to an integer. May return null.
+	 *
 	 * @param o
 	 * @return
 	 */
@@ -331,6 +337,7 @@ public class MathHelper {
 
 	/**
 	 * Casts a value to a double. May return null.
+	 *
 	 * @param o
 	 * @return
 	 */
@@ -352,6 +359,7 @@ public class MathHelper {
 
 	/**
 	 * Casts a value to a double. May return null.
+	 *
 	 * @param o
 	 * @return
 	 */
@@ -373,6 +381,7 @@ public class MathHelper {
 
 	/**
 	 * Casts a value to a boolean. May return null.
+	 *
 	 * @param o
 	 * @return
 	 */

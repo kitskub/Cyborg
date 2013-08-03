@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -45,9 +45,11 @@ public class AnnotatedCommandExecutor implements CommandExecutor {
 		} catch (IllegalAccessException e) {
 			throw new WrappedCommandException(e);
 		} catch (InvocationTargetException e) {
+			e.printStackTrace();
 			if (e.getCause() == null) {
 				throw new WrappedCommandException(e);
 			} else {
+				e.getCause().printStackTrace();
 				Throwable cause = e.getCause();
 				if (cause instanceof CommandException) {
 					throw (CommandException) cause;

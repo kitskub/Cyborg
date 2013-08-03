@@ -19,7 +19,6 @@
 package com.alta189.cyborg.api.event;
 
 public enum Order {
-
 	EARLIEST(0, false),
 	EARLIEST_IGNORE_CANCEL(1, true),
 	EARLY(2, false),

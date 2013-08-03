@@ -51,15 +51,15 @@ import java.util.regex.Pattern;
 import static com.alta189.cyborg.api.util.config.commented.CommentedConfigurationNode.LINE_SEPARATOR;
 
 /**
- * This class handles reading and writing configuration nodes in the INI format.
- * Because the INI format is fairly loose, this class can read INI files written with a few formats.
- * However, when writing INI files the configuration's settings will override what was previously in the file
+ * This class handles reading and writing configuration nodes in the INI format. Because the INI format is fairly loose,
+ * this class can read INI files written with a few formats. However, when writing INI files the configuration's
+ * settings will override what was previously in the file
  * <p/>
  * The INI format also has a few limitations over other formats.
  * <ul>
  * <li>Limited hierarchy: The format can only have one level of children (sections)</li>
- * <li>Extremely basic datatype support: The configuration can split up lists, but otherwise all
- * values are stored as strings. Maps are not supported.</li>
+ * <li>Extremely basic datatype support: The configuration can split up lists, but otherwise all values are stored as
+ * strings. Maps are not supported.</li>
  * <li>Saving files exactly as they were loaded is in some cases impossible. </li>
  * </ul>
  * <p/>
@@ -179,7 +179,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 				writeNodeSection(writer, childlessNodes);
 			}
 
-			for (Iterator<ConfigurationNode> i = sectionNodes.iterator(); i.hasNext(); ) {
+			for (Iterator<ConfigurationNode> i = sectionNodes.iterator(); i.hasNext();) {
 				ConfigurationNode node = i.next();
 				String[] comment = getComment(node);
 				if (comment != null) {
@@ -214,8 +214,9 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 
 	/**
 	 * This method reads one section of INI configuration data.
+	 *
 	 * @param parentPath The path of the section containing this data
-	 * @param lines      The lines of data to read
+	 * @param lines The lines of data to read
 	 * @return The configuration nodes read from the section
 	 * @throws ConfigurationException when an invalid node is specified
 	 */
@@ -244,10 +245,11 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	}
 
 	/**
-	 * Writes a single section of nodes to the specified Writer
-	 * The nodes passed to this method must not have children
+	 * Writes a single section of nodes to the specified Writer The nodes passed to this method must not have
+	 * children
+	 *
 	 * @param writer The Writer to write data to
-	 * @param nodes  The nodes to write
+	 * @param nodes The nodes to write
 	 * @throws ConfigurationException when a node cannot be correctly written
 	 */
 	protected void writeNodeSection(Writer writer, Collection<ConfigurationNode> nodes) throws ConfigurationException {
@@ -270,8 +272,9 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 	}
 
 	/**
-	 * Returns the comment for a given configuration node, with a safe check to make sure
-	 * the node is a CommentedConfigurationNode
+	 * Returns the comment for a given configuration node, with a safe check to make sure the node is a
+	 * CommentedConfigurationNode
+	 *
 	 * @param node The node to get a comment from
 	 * @return The node's comment, or null if no comment is present
 	 */
@@ -285,6 +288,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 
 	/**
 	 * Converts a raw String into the correct Object representation for the Configuration node
+	 *
 	 * @param value The string value
 	 * @return The value converted into the correct Object representation
 	 */
@@ -302,6 +306,7 @@ public class IniConfiguration extends AbstractConfiguration implements Commented
 
 	/**
 	 * Returns the String representation of a configuration value for writing to the file
+	 *
 	 * @param value
 	 * @return
 	 */

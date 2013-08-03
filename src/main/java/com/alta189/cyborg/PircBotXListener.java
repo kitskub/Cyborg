@@ -27,7 +27,6 @@ import org.pircbotx.hooks.events.ActionEvent;
 import org.pircbotx.hooks.events.ChannelInfoEvent;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
-import org.pircbotx.hooks.events.FileTransferFinishedEvent;
 import org.pircbotx.hooks.events.FingerEvent;
 import org.pircbotx.hooks.events.HalfOpEvent;
 import org.pircbotx.hooks.events.IncomingChatRequestEvent;
@@ -75,7 +74,7 @@ import org.pircbotx.hooks.events.UserModeEvent;
 import org.pircbotx.hooks.events.VersionEvent;
 import org.pircbotx.hooks.events.VoiceEvent;
 
-public class PircBotXListener extends ListenerAdapter {
+public class PircBotXListener extends ListenerAdapter<CyborgBot> {
 	@Override
 	public void onAction(ActionEvent actionEvent) throws Exception {
 		if (actionEvent.getChannel() == null) {
@@ -98,11 +97,6 @@ public class PircBotXListener extends ListenerAdapter {
 	@Override
 	public void onDisconnect(DisconnectEvent disconnectEvent) throws Exception {
 		Cyborg.getInstance().getEventManager().callEvent(new com.alta189.cyborg.api.event.bot.DisconnectEvent(disconnectEvent));
-	}
-
-	@Override
-	public void onFileTransferFinished(FileTransferFinishedEvent fileTransferFinishedEvent) throws Exception {
-		Cyborg.getInstance().getEventManager().callEvent(new com.alta189.cyborg.api.event.dcc.FileTransferFinishedEvent(fileTransferFinishedEvent));
 	}
 
 	@Override

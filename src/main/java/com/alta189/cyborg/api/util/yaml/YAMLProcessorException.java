@@ -20,6 +20,7 @@ package com.alta189.cyborg.api.util.yaml;
 
 /**
  * YAMLProcessor exception.
+ *
  * @author sk89q
  */
 public class YAMLProcessorException extends Exception {

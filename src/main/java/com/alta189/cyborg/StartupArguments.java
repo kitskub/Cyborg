@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -35,11 +35,13 @@ public class StartupArguments {
 	@Parameter(names = {"-log", "-verbose", "-v"}, description = "Level of verbosity")
 	private boolean verbose = false;
 	@Parameter(names = {"-settings", "-config"}, description = "Sets the location of the settings.yml")
-	private String settingsFile = "settings.yml";
+	private String settingsFile = null;
 	@Parameter(names = {"-exit", "-write-only"}, description = "Writes the settings file and exits")
 	private boolean exit = false;
 	@Parameter(names = {"-default", "-defaults", "-write-defaults"}, description = "Writes default settings file")
 	private boolean defaults = false;
+	@Parameter(names = "-noconsole", description = "If true, then a console will not be used")
+	private boolean noconsole = false;
 
 	public List<String> getParameters() {
 		return parameters;
@@ -50,7 +52,7 @@ public class StartupArguments {
 	}
 
 	public String getSettingsFile() {
-		return settingsFile == null ? "settings.yml" : settingsFile;
+		return settingsFile;
 	}
 
 	public boolean isExitAfterWrite() {
@@ -59,5 +61,9 @@ public class StartupArguments {
 
 	public boolean isWriteDefaults() {
 		return defaults;
+	}
+
+	public boolean useConsole() {
+		return !noconsole;
 	}
 }

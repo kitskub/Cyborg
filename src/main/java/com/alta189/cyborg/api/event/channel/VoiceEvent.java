@@ -38,7 +38,7 @@ public class VoiceEvent extends Event {
 	private final long timestamp;
 
 	public VoiceEvent(org.pircbotx.hooks.events.VoiceEvent event) {
-		this(event.getChannel(), event.getSource(), event.getRecipient(), event.hasVoice(), event.getTimestamp());
+		this(event.getChannel(), event.getUser(), event.getRecipient(), event.hasVoice(), event.getTimestamp());
 	}
 
 	public VoiceEvent(Channel channel, User source, User recipient, boolean voiced) {

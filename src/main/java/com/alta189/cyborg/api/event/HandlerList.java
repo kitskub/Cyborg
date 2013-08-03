@@ -30,14 +30,12 @@ import java.util.Map.Entry;
  */
 public class HandlerList {
 	/**
-	 * Handler array. This field being an array is the key to this system's
-	 * speed.
+	 * Handler array. This field being an array is the key to this system's speed.
 	 */
 	private ListenerRegistration[] handlers = null;
 	/**
-	 * Dynamic handler lists. These are changed using register() and
-	 * unregister() and are automatically baked to the handlers array any time
-	 * they have changed.
+	 * Dynamic handler lists. These are changed using register() and unregister() and are automatically baked to the
+	 * handlers array any time they have changed.
 	 */
 	private final EnumMap<Order, ArrayList<ListenerRegistration>> handlerslots;
 	/**
@@ -46,9 +44,8 @@ public class HandlerList {
 	private static ArrayList<HandlerList> alllists = new ArrayList<HandlerList>();
 
 	/**
-	 * Bake all handler lists. Best used just after all normal event
-	 * registration is complete, ie just after all plugins are loaded if you're
-	 * using fevents in a plugin system.
+	 * Bake all handler lists. Best used just after all normal event registration is complete, ie just after all
+	 * plugins are loaded if you're using fevents in a plugin system.
 	 */
 	public static void bakeAll() {
 		for (HandlerList h : alllists) {
@@ -72,8 +69,8 @@ public class HandlerList {
 	}
 
 	/**
-	 * Create a new handler list and initialize using EventPriority The
-	 * HandlerList is then added to meta-list for use in bakeAll()
+	 * Create a new handler list and initialize using EventPriority The HandlerList is then added to meta-list for
+	 * use in bakeAll()
 	 */
 	public HandlerList() {
 		handlerslots = new EnumMap<Order, ArrayList<ListenerRegistration>>(Order.class);
@@ -85,6 +82,7 @@ public class HandlerList {
 
 	/**
 	 * Register a new listener in this handler list
+	 *
 	 * @param listener listener to register
 	 */
 	public void register(ListenerRegistration listener) {
@@ -103,6 +101,7 @@ public class HandlerList {
 
 	/**
 	 * Remove a listener from a specific order slot
+	 *
 	 * @param listener listener to remove
 	 */
 	public void unregister(ListenerRegistration listener) {
@@ -115,7 +114,7 @@ public class HandlerList {
 	public void unregister(Object plugin) {
 		boolean changed = false;
 		for (List<ListenerRegistration> list : handlerslots.values()) {
-			for (ListIterator<ListenerRegistration> i = list.listIterator(); i.hasNext(); ) {
+			for (ListIterator<ListenerRegistration> i = list.listIterator(); i.hasNext();) {
 				if (i.next().getOwner().equals(plugin)) {
 					i.remove();
 					changed = true;

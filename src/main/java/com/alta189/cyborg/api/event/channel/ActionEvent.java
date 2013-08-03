@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -19,6 +19,7 @@
 package com.alta189.cyborg.api.event.channel;
 
 import com.alta189.cyborg.Cyborg;
+import com.alta189.cyborg.CyborgBot;
 import com.alta189.cyborg.api.event.Event;
 import com.alta189.cyborg.api.event.HandlerList;
 import lombok.Getter;
@@ -55,7 +56,7 @@ public class ActionEvent extends Event {
 	}
 
 	public void respond(String response) {
-		Cyborg.getInstance().sendMessage(channel, user, response);
+		((CyborgBot) channel.getBot()).sendMessage(channel, user, response);
 	}
 
 	@Override

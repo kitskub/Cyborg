@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -53,51 +53,47 @@ public class Settings {
 		settings.setProperty("alt-nicks", nicks);
 	}
 
-	public static String getServerAddress() {
-		return settings.getString("server.address", "irc.esper.net");
-	}
-
-	public static void setServerAddress(String address) {
-		settings.setProperty("server.address", address);
-	}
-
-	public static int getServerPort() {
-		return settings.getInt("server.port", 6667);
-	}
-
-	public static void setServerPort(int port) {
-		settings.setProperty("server.port", port);
-	}
-
-	public static String getServerPass() {
-		String pass = settings.getString("server.password", "none");
-		if (pass.equals("none")) {
-			return null;
-		}
-		return pass;
-	}
-
-	public static void setServerPass(String pass) {
-		if (pass == null) {
-			settings.setProperty("sever.password", "none");
-		} else {
-			settings.setProperty("sever.password", pass);
-		}
-	}
-
-	public static List<String> getChannels() {
-		return settings.getStringList("server.channels", new ArrayList<String>());
-	}
-
-	public static void setChannels(List<String> nicks) {
-		settings.setProperty("server.channels", nicks);
-	}
-
 	public static long getMessageDelay() {
 		return Long.valueOf(settings.getString("message-delay", "1000"));
 	}
 
 	public static void setMessageDelay(long delay) {
 		settings.setProperty("message-delay", delay);
+	}
+
+	public static List<String> getServerAddresses() {
+		return settings.getKeys("servers");
+	}
+
+	public static int getServerPort(String server) {
+		return settings.getInt("servers." + server + ".port", 6667);
+	}
+
+	public static void setServerPort(String server, int port) {
+		settings.setProperty("servers." + server + ".port", port);
+	}
+
+	public static String getServerPass(String server) {
+		String pass = settings.getString("servers." + server + "password", "none");
+		if (pass.equals("none")) {
+			return null;
+		}
+		return pass;
+	}
+
+	public static void setServerPass(String server, String pass) {
+		if (pass == null) {
+			settings.setProperty("servers." + server + "password", "none");
+		} else {
+			settings.setProperty("servers." + server + "password", pass);
+		}
+	}
+
+	public static List<String> getChannels(String server) {
+		return settings.getStringList("servers." + server + "channels", new ArrayList<String>());
+	}
+
+	public static void setChannels(String server, List<String> nicks) {
+		settings.setProperty("servers." + server + "channels", nicks);
 	}
 }

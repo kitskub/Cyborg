@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -22,7 +22,7 @@ import com.alta189.cyborg.Cyborg;
 import com.alta189.cyborg.api.command.CommandManager;
 import com.alta189.cyborg.api.command.CommandResult;
 import com.alta189.cyborg.api.command.CommandSource;
-import jline.console.ConsoleReader;
+import jline.ConsoleReader;
 import org.pircbotx.Colors;
 
 public class TerminalThread extends Thread {
@@ -35,8 +35,7 @@ public class TerminalThread extends Thread {
 	public void start() {
 		try {
 			reader = new ConsoleReader();
-			reader.setExpandEvents(true);
-			user = new TerminalUser();
+			user = new TerminalUser("Terminal");
 			source = new CommandSource(user);
 		} catch (Exception e) {
 			e.printStackTrace();

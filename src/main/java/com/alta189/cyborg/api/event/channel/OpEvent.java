@@ -38,7 +38,7 @@ public class OpEvent extends Event {
 	private final long timestamp;
 
 	public OpEvent(org.pircbotx.hooks.events.OpEvent event) {
-		this(event.getChannel(), event.getSource(), event.getRecipient(), event.isOp(), event.getTimestamp());
+		this(event.getChannel(), event.getUser(), event.getRecipient(), event.isOp(), event.getTimestamp());
 	}
 
 	public OpEvent(Channel channel, User source, User recipient, boolean isOp) {

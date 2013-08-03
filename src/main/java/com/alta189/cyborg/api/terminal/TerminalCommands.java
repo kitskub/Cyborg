@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -32,10 +32,9 @@ public class TerminalCommands {
 
 			Cyborg.getInstance().getPluginManager().disablePlugins();
 			Cyborg.getInstance().getPluginManager().clearPlugins();
-			Cyborg.getInstance().quitServer();
 			Cyborg.getInstance().shutdown();
 
-			Main.getTerminalThread().interrupt();
+			Main.shutdownTerminal();
 
 			System.exit(1);
 		}

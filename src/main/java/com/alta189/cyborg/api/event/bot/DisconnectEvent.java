@@ -41,6 +41,7 @@ public class DisconnectEvent extends Event {
 
 	/**
 	 * Get the static handler list of this event subclass.
+	 *
 	 * @return HandlerList to call event with
 	 */
 	@Override

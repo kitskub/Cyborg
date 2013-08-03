@@ -25,6 +25,7 @@ import java.io.Writer;
 
 /**
  * A subclass of IniConfiguration that loads from a String
+ *
  * @author zml2008
  */
 public class StringLoadingIniConfiguration extends IniConfiguration {
@@ -42,8 +43,9 @@ public class StringLoadingIniConfiguration extends IniConfiguration {
 	}
 
 	/**
-	 * Set the value to load from.  {@link #load()} needs to be called separately for
-	 * the value passed in this method to affect the actual configuration data.
+	 * Set the value to load from. {@link #load()} needs to be called separately for the value passed in this method
+	 * to affect the actual configuration data.
+	 *
 	 * @param value The configuration value
 	 */
 	public void setValue(String value) {

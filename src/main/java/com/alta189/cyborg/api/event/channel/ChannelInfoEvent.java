@@ -20,28 +20,27 @@ package com.alta189.cyborg.api.event.channel;
 
 import com.alta189.cyborg.api.event.Event;
 import com.alta189.cyborg.api.event.HandlerList;
+import com.google.common.collect.ImmutableList;
 import lombok.Getter;
 import org.pircbotx.ChannelListEntry;
-
-import java.util.Set;
 
 public class ChannelInfoEvent extends Event {
 	private static HandlerList handlers = new HandlerList();
 	@Getter
-	private final Set<ChannelListEntry> list;
+	private final ImmutableList<ChannelListEntry> list;
 
 	public ChannelInfoEvent(org.pircbotx.hooks.events.ChannelInfoEvent event) {
 		this(event.getList());
 	}
 
-	public ChannelInfoEvent(Set<ChannelListEntry> list) {
+	public ChannelInfoEvent(ImmutableList<ChannelListEntry> list) {
 		this.list = list;
 	}
 
 	//TODO Construct sendMessage
-
 	/**
 	 * Get the static handler list of this event subclass.
+	 *
 	 * @return HandlerList to call event with
 	 */
 	@Override

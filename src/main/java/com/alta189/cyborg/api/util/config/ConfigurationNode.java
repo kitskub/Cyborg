@@ -45,7 +45,6 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	}
 
 	// Delegated methods
-
 	public boolean getBoolean() {
 		return valueHolder.getBoolean();
 	}
@@ -135,7 +134,6 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	}
 
 	// Actual value access
-
 	public Object getValue() {
 		return getValue(null);
 	}
@@ -153,6 +151,7 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 
 	/**
 	 * Sets the configuration's value
+	 *
 	 * @param value The value to set
 	 * @return The previous value of the configuration
 	 */
@@ -178,7 +177,6 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	}
 
 	// Util methods to make sure stuff is connected properly
-
 	/**
 	 * Detach all this node's children, making sure to remove associations both ways
 	 */
@@ -197,6 +195,7 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 
 	/**
 	 * Return whether a ConfigurationNode is attached to any configuration
+	 *
 	 * @return if this node is attached to any configuration
 	 */
 	public boolean isAttached() {
@@ -219,8 +218,8 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 		ConfigurationNodeSource oldParent = getParent();
 		while (oldParent != null) {
 			if (visited.contains(oldParent)) {
-				throw new IllegalArgumentException("Attempted circular inheritance between child " + getPath() + " and parent " +
-						(oldParent instanceof ConfigurationNode ? ((ConfigurationNode) oldParent).getPath() : "root") + ".");
+				throw new IllegalArgumentException("Attempted circular inheritance between child " + getPath() + " and parent "
+					+ (oldParent instanceof ConfigurationNode ? ((ConfigurationNode) oldParent).getPath() : "root") + ".");
 			}
 			visited.add(oldParent);
 			oldParent = oldParent instanceof ConfigurationNode ? ((ConfigurationNode) oldParent).getParent() : null;
@@ -235,7 +234,8 @@ public class ConfigurationNode extends AbstractConfigurationNodeSource implement
 	}
 
 	/**
-	 * @return The path, joined by the {@link AbstractConfiguration#getPathSeparator()} of the attached configuration
+	 * @return The path, joined by the {@link AbstractConfiguration#getPathSeparator()} of the attached
+	 * configuration
 	 * @see #getPathElements
 	 */
 	public String getPath() {

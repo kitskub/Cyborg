@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -19,9 +19,16 @@
 package com.alta189.cyborg.api.terminal;
 
 import java.io.PrintWriter;
+import lombok.Getter;
 
 public class TerminalUser {
 	private PrintWriter out = new PrintWriter(System.out);
+	@Getter
+	private final String nick;
+
+	public TerminalUser(String nick) {
+		this.nick = nick;
+	}
 
 	public void sendMessage(String message) {
 		out.println(message);

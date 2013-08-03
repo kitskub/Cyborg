@@ -23,6 +23,7 @@ import com.alta189.cyborg.api.util.config.ConfigurationNode;
 
 /**
  * A ConfigurationNode type that also stores comments. These normally exist in {@link CommentedConfiguration}s.
+ *
  * @author zml2008
  */
 public class CommentedConfigurationNode extends ConfigurationNode {
@@ -35,7 +36,6 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 		}
 		LINE_SEPARATOR = sep;
 	}
-
 	private String[] comment;
 
 	public CommentedConfigurationNode(Configuration config, String[] path, Object value) {
@@ -43,8 +43,9 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 	}
 
 	/**
-	 * Returns the comment lines attached to this configuration node
-	 * Will return null if this node doesn't have a comment
+	 * Returns the comment lines attached to this configuration node Will return null if this node doesn't have a
+	 * comment
+	 *
 	 * @return The comment for this node
 	 */
 	public String[] getComment() {
@@ -52,8 +53,9 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 	}
 
 	/**
-	 * Sets the comment that is attached to this configuration node.
-	 * In this method the comment is provided as one line, containing the line separator character
+	 * Sets the comment that is attached to this configuration node. In this method the comment is provided as one
+	 * line, containing the line separator character
+	 *
 	 * @param comment The comment to set
 	 */
 	public void setComment(String comment) {
@@ -63,6 +65,7 @@ public class CommentedConfigurationNode extends ConfigurationNode {
 
 	/**
 	 * Sets the comment of the configuration, already split by line
+	 *
 	 * @param comment The comment lines
 	 */
 	public void setComment(String... comment) {

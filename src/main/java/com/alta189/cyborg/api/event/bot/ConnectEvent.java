@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -26,21 +26,21 @@ public class ConnectEvent extends Event {
 	private static HandlerList handlers = new HandlerList();
 	@Getter
 	private final long timestamp;
+	@Getter
+	private final String server;
 
 	public ConnectEvent(org.pircbotx.hooks.events.ConnectEvent event) {
-		this(event.getTimestamp());
+		this(event.getTimestamp(), event.getBot().getServerInfo().getServerName());
 	}
 
-	public ConnectEvent() {
-		this(System.currentTimeMillis());
-	}
-
-	public ConnectEvent(long timestamp) {
+	public ConnectEvent(long timestamp, String server) {
 		this.timestamp = timestamp;
+		this.server = server;
 	}
 
 	/**
 	 * Get the static handler list of this event subclass.
+	 *
 	 * @return HandlerList to call event with
 	 */
 	@Override

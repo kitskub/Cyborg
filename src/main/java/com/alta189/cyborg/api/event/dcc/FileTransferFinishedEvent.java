@@ -21,28 +21,21 @@ package com.alta189.cyborg.api.event.dcc;
 import com.alta189.cyborg.api.event.Event;
 import com.alta189.cyborg.api.event.HandlerList;
 import lombok.Getter;
-import org.pircbotx.DccFileTransfer;
+import org.pircbotx.dcc.FileTransfer;
 
 public class FileTransferFinishedEvent extends Event {
 	private static HandlerList handlers = new HandlerList();
 	@Getter
-	private final DccFileTransfer transfer;
-	@Getter
-	private final Exception exception;
+	private final FileTransfer transfer;
 	@Getter
 	private final long timestamp;
 
-	public FileTransferFinishedEvent(org.pircbotx.hooks.events.FileTransferFinishedEvent event) {
-		this(event.getTransfer(), event.getException(), event.getTimestamp());
+	public FileTransferFinishedEvent(FileTransfer transfer) {
+		this(transfer, System.currentTimeMillis());
 	}
 
-	public FileTransferFinishedEvent(DccFileTransfer transfer, Exception exception) {
-		this(transfer, exception, System.currentTimeMillis());
-	}
-
-	public FileTransferFinishedEvent(DccFileTransfer transfer, Exception exception, long timestamp) {
+	public FileTransferFinishedEvent(FileTransfer transfer, long timestamp) {
 		this.transfer = transfer;
-		this.exception = exception;
 		this.timestamp = timestamp;
 	}
 

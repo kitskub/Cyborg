@@ -19,7 +19,6 @@
 package com.alta189.cyborg.api.command;
 
 public class CommandResultUtil {
-
 	public static CommandResult get(ReturnType type, String body, CommandSource source, CommandContext context) {
 		CommandResult result = new CommandResult().setReturnType(type).setBody(body);
 		if (source.getSource() == CommandSource.Source.USER) {

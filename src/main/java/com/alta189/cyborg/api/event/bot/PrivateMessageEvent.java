@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -19,6 +19,7 @@
 package com.alta189.cyborg.api.event.bot;
 
 import com.alta189.cyborg.Cyborg;
+import com.alta189.cyborg.CyborgBot;
 import com.alta189.cyborg.api.event.Event;
 import com.alta189.cyborg.api.event.HandlerList;
 import lombok.Getter;
@@ -34,16 +35,14 @@ public class PrivateMessageEvent extends Event {
 	private final long timestamp;
 
 	public PrivateMessageEvent(org.pircbotx.hooks.events.PrivateMessageEvent event) {
-		this(event.getUser(), event.getMessage(), event.getTimestamp());
+		this(event.getUser(), event.getMessage(), event.getTimestamp(), event.getBot().getServerInfo().getServerName());
 	}
 
-	public PrivateMessageEvent(User user, String message) {
-		this.user = user;
-		this.message = message;
-		timestamp = System.currentTimeMillis();
+	public PrivateMessageEvent(User user, String message, String server) {
+		this(user, message, System.currentTimeMillis(), server);
 	}
 
-	public PrivateMessageEvent(User user, String message, long timestamp) {
+	public PrivateMessageEvent(User user, String message, long timestamp, String server) {
 		this.user = user;
 		this.message = message;
 		this.timestamp = timestamp;

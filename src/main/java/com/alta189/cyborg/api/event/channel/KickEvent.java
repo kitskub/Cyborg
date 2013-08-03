@@ -38,7 +38,7 @@ public class KickEvent extends Event {
 	private final long timestamp;
 
 	public KickEvent(org.pircbotx.hooks.events.KickEvent event) {
-		this(event.getChannel(), event.getSource(), event.getRecipient(), event.getReason(), event.getTimestamp());
+		this(event.getChannel(), event.getUser(), event.getRecipient(), event.getReason(), event.getTimestamp());
 	}
 
 	public KickEvent(Channel channel, User source, User recipient, long timestamp) {

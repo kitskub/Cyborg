@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -26,6 +26,8 @@ import lombok.Getter;
 public class InviteEvent extends Event {
 	private static HandlerList handlers = new HandlerList();
 	@Getter
+	private final String server;
+	@Getter
 	private final String user;
 	@Getter
 	private final String channel;
@@ -33,21 +35,22 @@ public class InviteEvent extends Event {
 	private final long timestamp;
 
 	public InviteEvent(org.pircbotx.hooks.events.InviteEvent event) {
-		this(event.getUser(), event.getChannel(), event.getTimestamp());
+		this(event.getBot().getServerInfo().getServerName(), event.getUser(), event.getChannel(), event.getTimestamp());
 	}
 
-	public InviteEvent(String user, String channel) {
-		this(user, channel, System.currentTimeMillis());
+	public InviteEvent(String server, String user, String channel) {
+		this(server, user, channel, System.currentTimeMillis());
 	}
 
-	public InviteEvent(String user, String channel, long timestamp) {
+	public InviteEvent(String server, String user, String channel, long timestamp) {
+		this.server = server;
 		this.user = user;
 		this.channel = channel;
 		this.timestamp = timestamp;
 	}
 
 	public void respond(String response) {
-		Cyborg.getInstance().sendMessage(user, response);
+		Cyborg.getInstance().getBot(server).sendMessage(user, response);
 	}
 
 	@Override

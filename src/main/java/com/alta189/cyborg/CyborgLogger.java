@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -22,9 +22,10 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class CyborgLogger {
-	private static Logger logger = Logger.getLogger(Main.class.getName());
+	private static Logger logger;
 
-	protected static void init() {
+	protected static void initConsole() {
+		logger = Logger.getLogger(Main.class.getName());
 		ConsoleHandler handler = new ConsoleHandler();
 		handler.setFormatter(new CommonFormatter());
 		logger.addHandler(handler);
@@ -35,8 +36,11 @@ public class CyborgLogger {
 		return logger;
 	}
 
-	public static void log(Object obj) {
+	public static void setLogger(Logger l) {
+		logger = l;
+	}
 
+	public static void log(Object obj) {
 	}
 
 	public static void log(Level lvl, Object obj) {
@@ -44,7 +48,12 @@ public class CyborgLogger {
 	}
 
 	public static void log(Level lvl, Object obj, Throwable throwable) {
+	}
 
+	static void initSlf() {
+		//try {
+		//    Class.forName("org.slf4j.impl.StaticLoggerBinder");
+		//} catch (ClassNotFoundException ex) {}
 	}
 
 	public enum Level {

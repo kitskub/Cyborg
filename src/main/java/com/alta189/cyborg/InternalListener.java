@@ -26,8 +26,8 @@ import com.alta189.cyborg.api.event.bot.ConnectEvent;
 public class InternalListener implements Listener {
 	@EventHandler(order = Order.EARLIEST)
 	public void onConnect(ConnectEvent event) {
-		for (String channel : Settings.getChannels()) {
-			Cyborg.getInstance().joinChannel(channel);
+		for (String channel : Settings.getChannels(event.getServer())) {
+			Cyborg.getInstance().getBot(event.getServer()).joinChannel(channel);
 		}
 	}
 }

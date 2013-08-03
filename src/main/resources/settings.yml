@@ -1,12 +1,12 @@
 nick: Cyborg
 alt-nicks:
-   - TheCyborg
-   - CyborgBot
+  - TheCyborg
+  - CyborgBot
 ident: Cyborg
 message-delay: 1000
-server:
-   address: irc.esper.net
-   port: 6667
-   password: none
-   channels:
-       - #cyborg	
+servers:
+  irc.esper.net:
+    port: 6667
+    password: none
+    channels:
+      - #cyborg	

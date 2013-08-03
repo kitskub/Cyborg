@@ -23,11 +23,13 @@ import java.util.Map;
 
 /**
  * String utilities.
+ *
  * @author sk89q
  */
 public class StringUtil {
 	/**
 	 * Trim a string if it is longer than a certain length.
+	 *
 	 * @param str
 	 * @param len
 	 * @return
@@ -42,13 +44,14 @@ public class StringUtil {
 
 	/**
 	 * Join an array of strings into a string.
+	 *
 	 * @param str
 	 * @param delimiter
 	 * @param initialIndex
 	 * @return
 	 */
 	public static String joinString(String[] str, String delimiter,
-									int initialIndex) {
+		int initialIndex) {
 		if (str.length == 0) {
 			return "";
 		}
@@ -61,6 +64,7 @@ public class StringUtil {
 
 	/**
 	 * Join an array of strings into a string.
+	 *
 	 * @param str
 	 * @param delimiter
 	 * @param initialIndex
@@ -68,7 +72,7 @@ public class StringUtil {
 	 * @return
 	 */
 	public static String joinQuotedString(String[] str, String delimiter,
-										  int initialIndex, String quote) {
+		int initialIndex, String quote) {
 		if (str.length == 0) {
 			return "";
 		}
@@ -84,6 +88,7 @@ public class StringUtil {
 
 	/**
 	 * Join an array of strings into a string.
+	 *
 	 * @param str
 	 * @param delimiter
 	 * @return
@@ -94,13 +99,14 @@ public class StringUtil {
 
 	/**
 	 * Join an array of strings into a string.
+	 *
 	 * @param str
 	 * @param delimiter
 	 * @param initialIndex
 	 * @return
 	 */
 	public static String joinString(Object[] str, String delimiter,
-									int initialIndex) {
+		int initialIndex) {
 		if (str.length == 0) {
 			return "";
 		}
@@ -113,13 +119,14 @@ public class StringUtil {
 
 	/**
 	 * Join an array of strings into a string.
+	 *
 	 * @param str
 	 * @param delimiter
 	 * @param initialIndex
 	 * @return
 	 */
 	public static String joinString(int[] str, String delimiter,
-									int initialIndex) {
+		int initialIndex) {
 		if (str.length == 0) {
 			return "";
 		}
@@ -132,13 +139,14 @@ public class StringUtil {
 
 	/**
 	 * Join an list of strings into a string.
+	 *
 	 * @param str
 	 * @param delimiter
 	 * @param initialIndex
 	 * @return
 	 */
 	public static String joinString(Collection<?> str, String delimiter,
-									int initialIndex) {
+		int initialIndex) {
 		if (str.size() == 0) {
 			return "";
 		}
@@ -160,31 +168,28 @@ public class StringUtil {
 	/**
 	 * <p>Find the Levenshtein distance between two Strings.</p>
 	 * <p/>
-	 * <p>This is the number of changes needed to change one String into
-	 * another, where each change is a single character modification (deletion,
-	 * insertion or substitution).</p>
+	 * <p>This is the number of changes needed to change one String into another, where each change is a single
+	 * character modification (deletion, insertion or substitution).</p>
 	 * <p/>
-	 * <p>The previous implementation of the Levenshtein distance algorithm
-	 * was from <a href="http://www.merriampark.com/ld.htm">http://www.merriampark.com/ld.htm</a></p>
+	 * <p>The previous implementation of the Levenshtein distance algorithm was from <a
+	 * href="http://www.merriampark.com/ld.htm">http://www.merriampark.com/ld.htm</a></p>
 	 * <p/>
-	 * <p>Chas Emerick has written an implementation in Java, which avoids an OutOfMemoryError
-	 * which can occur when my Java implementation is used with very large strings.<br>
-	 * This implementation of the Levenshtein distance algorithm
-	 * is from <a href="http://www.merriampark.com/ldjava.htm">http://www.merriampark.com/ldjava.htm</a></p>
+	 * <p>Chas Emerick has written an implementation in Java, which avoids an OutOfMemoryError which can occur when
+	 * my Java implementation is used with very large strings.<br>
+	 * This implementation of the Levenshtein distance algorithm is from <a
+	 * href="http://www.merriampark.com/ldjava.htm">http://www.merriampark.com/ldjava.htm</a></p>
 	 * <p/>
-	 * <pre>
-	 * StringUtil.getLevenshteinDistance(null, *)             = IllegalArgumentException
-	 * StringUtil.getLevenshteinDistance(*, null)             = IllegalArgumentException
-	 * StringUtil.getLevenshteinDistance("","")               = 0
-	 * StringUtil.getLevenshteinDistance("","a")              = 1
-	 * StringUtil.getLevenshteinDistance("aaapppp", "")       = 7
-	 * StringUtil.getLevenshteinDistance("frog", "fog")       = 1
-	 * StringUtil.getLevenshteinDistance("fly", "ant")        = 3
-	 * StringUtil.getLevenshteinDistance("elephant", "hippo") = 7
-	 * StringUtil.getLevenshteinDistance("hippo", "elephant") = 7
-	 * StringUtil.getLevenshteinDistance("hippo", "zzzzzzzz") = 8
-	 * StringUtil.getLevenshteinDistance("hello", "hallo")    = 1
+	 * <
+	 * pre>
+	 * StringUtil.getLevenshteinDistance(null, *) = IllegalArgumentException StringUtil.getLevenshteinDistance(*,
+	 * null) = IllegalArgumentException StringUtil.getLevenshteinDistance("","") = 0
+	 * StringUtil.getLevenshteinDistance("","a") = 1 StringUtil.getLevenshteinDistance("aaapppp", "") = 7
+	 * StringUtil.getLevenshteinDistance("frog", "fog") = 1 StringUtil.getLevenshteinDistance("fly", "ant") = 3
+	 * StringUtil.getLevenshteinDistance("elephant", "hippo") = 7 StringUtil.getLevenshteinDistance("hippo",
+	 * "elephant") = 7 StringUtil.getLevenshteinDistance("hippo", "zzzzzzzz") = 8
+	 * StringUtil.getLevenshteinDistance("hello", "hallo") = 1
 	 * </pre>
+	 *
 	 * @param s the first String, must not be null
 	 * @param t the second String, must not be null
 	 * @return result distance
@@ -196,24 +201,24 @@ public class StringUtil {
 		}
 
 		/*
-				 * The difference between this impl. and the previous is that, rather
-				 * than creating and retaining a matrix of size s.length()+1 by
-				 * t.length()+1, we maintain two single-dimensional arrays of length
-				 * s.length()+1. The first, d, is the 'current working' distance array
-				 * that maintains the newest distance cost counts as we iterate through
-				 * the characters of String s. Each time we increment the index of
-				 * String t we are comparing, d is copied to p, the second int[]. Doing
-				 * so allows us to retain the previous cost counts as required by the
-				 * algorithm (taking the minimum of the cost count to the left, up one,
-				 * and diagonally up and to the left of the current cost count being
-				 * calculated). (Note that the arrays aren't really copied anymore, just
-				 * switched...this is clearly much better than cloning an array or doing
-				 * a System.arraycopy() each time through the outer loop.)
-				 *
-				 * Effectively, the difference between the two implementations is this
-				 * one does not cause an out of memory condition when calculating the LD
-				 * over two very large strings.
-				 */
+		 * The difference between this impl. and the previous is that, rather
+		 * than creating and retaining a matrix of size s.length()+1 by
+		 * t.length()+1, we maintain two single-dimensional arrays of length
+		 * s.length()+1. The first, d, is the 'current working' distance array
+		 * that maintains the newest distance cost counts as we iterate through
+		 * the characters of String s. Each time we increment the index of
+		 * String t we are comparing, d is copied to p, the second int[]. Doing
+		 * so allows us to retain the previous cost counts as required by the
+		 * algorithm (taking the minimum of the cost count to the left, up one,
+		 * and diagonally up and to the left of the current cost count being
+		 * calculated). (Note that the arrays aren't really copied anymore, just
+		 * switched...this is clearly much better than cloning an array or doing
+		 * a System.arraycopy() each time through the outer loop.)
+		 *
+		 * Effectively, the difference between the two implementations is this
+		 * one does not cause an out of memory condition when calculating the LD
+		 * over two very large strings.
+		 */
 
 		int n = s.length(); // length of s
 		int m = t.length(); // length of t
@@ -249,7 +254,7 @@ public class StringUtil {
 				// minimum of cell to the left+1, to the top+1, diagonally left
 				// and up +cost
 				d[i] = Math.min(Math.min(d[i - 1] + 1, p[i] + 1), p[i - 1]
-						+ cost);
+					+ cost);
 			}
 
 			// copy current distance counts to 'previous row' distance counts

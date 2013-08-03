@@ -23,19 +23,20 @@ package com.alta189.cyborg.api.event;
  */
 public abstract class Event {
 	/**
-	 * Stores cancelled status. will be false unless a subclass publishes
-	 * setCancelled.
+	 * Stores cancelled status. will be false unless a subclass publishes setCancelled.
 	 */
 	protected boolean cancelled = false;
 
 	/**
 	 * Get the static handler list of this event subclass.
+	 *
 	 * @return HandlerList to call event with
 	 */
 	public abstract HandlerList getHandlers();
 
 	/**
 	 * Get event type name.
+	 *
 	 * @return event name
 	 */
 	protected String getEventName() {
@@ -48,14 +49,14 @@ public abstract class Event {
 	}
 
 	/**
-	 * Set cancelled status. Events which wish to be cancellable should
-	 * implement Cancellable and implement setCancelled as:
+	 * Set cancelled status. Events which wish to be cancellable should implement Cancellable and implement
+	 * setCancelled as:
 	 * <p/>
-	 * <pre>
-	 * public void setCancelled(boolean cancelled) {
-	 * 	super.setCancelled(cancelled);
-	 * }
+	 * <
+	 * pre>
+	 * public void setCancelled(boolean cancelled) { super.setCancelled(cancelled); }
 	 * </pre>
+	 *
 	 * @param cancelled True to cancel event
 	 */
 	protected void setCancelled(boolean cancelled) {
@@ -64,8 +65,9 @@ public abstract class Event {
 
 	/**
 	 * Returning true will prevent calling any even Order slots.
-	 * @return false if the event is propogating; events which do not implement
-	 *         Cancellable should never return true here
+	 *
+	 * @return false if the event is propogating; events which do not implement Cancellable should never return true
+	 * here
 	 * @see Order
 	 */
 	public boolean isCancelled() {

@@ -47,25 +47,28 @@ public interface Plugin extends Named {
 
 	/**
 	 * Returns true if the plugins is enabled
+	 *
 	 * @return enabled
 	 */
 	public boolean isEnabled();
 
 	/**
-	 * Changes the enabled state of the plugin This should only be called by the
-	 * plugin's loader
+	 * Changes the enabled state of the plugin This should only be called by the plugin's loader
+	 *
 	 * @param enabled
 	 */
 	public void setEnabled(boolean enabled);
 
 	/**
 	 * Returns the plugin's loader
+	 *
 	 * @return loader
 	 */
 	public PluginLoader getPluginLoader();
 
 	/**
 	 * Returns the plugin's logger
+	 *
 	 * @return logger
 	 */
 	public Logger getLogger();
@@ -74,6 +77,7 @@ public interface Plugin extends Named {
 
 	/**
 	 * Returns the plugin's description
+	 *
 	 * @return description
 	 */
 	public PluginDescriptionFile getDescription();

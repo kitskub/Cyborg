@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (C) 2012 CyborgDev <cyborg@alta189.com>
  *
  * This file is part of Cyborg
@@ -19,6 +19,7 @@
 package com.alta189.cyborg.api.command;
 
 import com.alta189.cyborg.Cyborg;
+import com.alta189.cyborg.CyborgBot;
 import com.alta189.cyborg.api.event.EventHandler;
 import com.alta189.cyborg.api.event.Listener;
 import com.alta189.cyborg.api.event.Order;
@@ -78,22 +79,22 @@ public class CommandListener implements Listener {
 			if (handle == null || result.getReturnType() != ReturnType.MESSAGE || result.isForced()) {
 				switch (result.getReturnType()) {
 					case ACTION:
-						Cyborg.getInstance().sendAction(result.getTarget(), result.getBody());
+						((CyborgBot) event.getChannel().getBot()).sendAction(result.getTarget(), result.getBody());
 						break;
 					case MESSAGE:
-						Cyborg.getInstance().sendMessage(result.getTarget(), result.getBody());
+						((CyborgBot) event.getChannel().getBot()).sendMessage(result.getTarget(), result.getBody());
 						break;
 					case NOTICE:
-						Cyborg.getInstance().sendNotice(result.getTarget(), result.getBody());
+						((CyborgBot) event.getChannel().getBot()).sendNotice(result.getTarget(), result.getBody());
 						break;
 				}
 			} else {
 				switch (handle) {
 					case PING:
-						Cyborg.getInstance().sendMessage(event.getChannel(), data + ": " + result.getBody());
+						((CyborgBot) event.getChannel().getBot()).sendMessage(event.getChannel(), data + ": " + result.getBody());
 						break;
 					case NOTICE:
-						Cyborg.getInstance().sendNotice(data, result.getBody());
+						((CyborgBot) event.getChannel().getBot()).sendNotice(data, result.getBody());
 				}
 			}
 		} catch (CommandException e) {
@@ -106,7 +107,7 @@ public class CommandListener implements Listener {
 		try {
 			CommandResult result = Cyborg.getInstance().getCommandManager().execute(new CommandSource(event.getUser()), event.getMessage(), CommandContext.LocationType.PRIVATE_MESSAGE);
 			if (result != null) {
-				Cyborg.getInstance().sendMessage(result.getTarget(), result.getBody());
+				event.getUser().send().message(result.getBody());
 			}
 		} catch (CommandException e) {
 			e.printStackTrace();
